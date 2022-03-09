@@ -7,13 +7,12 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Hello World</h1>
       <div className="outerRing">
         <div className="timer">
-          <div id="id">
-            <EditTimer />
-            <Timer />
-          </div>  
+          <div id="time">
+            {isEditable ? <EditTimer /> : <Timer />}
+          </div>
+          <button className='startStop'>start</button>
         </div>
       </div>
     </div>

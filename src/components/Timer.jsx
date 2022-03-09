@@ -2,9 +2,11 @@ import React from 'react';
 
 const Timer = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <span id="minutes">20</span>
+            <span>:</span>
+            <span id="secondes">00</span>
+        </>
     );
 };
 
