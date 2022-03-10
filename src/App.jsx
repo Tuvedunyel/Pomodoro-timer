@@ -9,7 +9,7 @@ function App() {
   const [secondes, setSecondes] = useState(0);
   const [progressStart, setProgressStart] = useState(0);
   const [progressEnd, setProgressEnd] = useState(0);
-  const [degTravel, setDegTravel] = useState(360);
+  const [degTravel, setDegTravel] = useState(0);
   const progressBar = document.querySelector(".outerRing");
 
   useEffect(() => {
@@ -18,26 +18,35 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setProgressEnd(parseInt(minutes) * 60 + parseInt(secondes));
+  }, [isEditable]);
+
+  useEffect(() => {
+    setDegTravel(360 / progressEnd);
+  }, [progressEnd]);
+
+  useEffect(() => {
     if (timerOn) {
       setTimeout(() => {
-        setProgressEnd(minutes * 60 + secondes);
-        setDegTravel(360 / (minutes * 60 + secondes));
-        setProgressStart(progressStart + 1);
         handleCountdown();
       }, 1000);
+    } else {
+      setProgressStart(0);
+      setProgressEnd(0);
     }
   }, [timerOn, minutes, secondes]);
 
   const handleCountdown = () => {
+    setProgressStart(progressStart + 1);
     progressBar.style.background = `conic-gradient(
-      	#9d0000 ${(progressStart / 2) * degTravel}deg,
-      	#17171a ${(progressStart / 2) * degTravel}deg
+      	#9d0000 ${progressStart * degTravel}deg,
+      	#17171a ${progressStart * degTravel}deg
   		)`;
     if (progressStart == progressEnd) {
       progressBar.style.background = `conic-gradient(
-				#00aa51 360deg,
-				#00aa51 360deg
-		  )`;
+    		#00aa51 360deg,
+    		#00aa51 360deg
+      )`;
     }
     if (secondes > 0) {
       setSecondes(secondes - 1);
